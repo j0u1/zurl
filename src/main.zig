@@ -16,6 +16,11 @@ pub fn main(init: std.process.Init) !void {
 
     const url = args[1];
 
+    if (url.len > 4096) {
+        log.err("URL is too long (maximum 4096 bytes)", .{});
+        std.process.exit(1);
+    }
+
     var client = std.http.Client{ .allocator = allocator, .io = io };
     defer client.deinit();
 
