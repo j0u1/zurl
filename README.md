@@ -17,7 +17,7 @@
 ## Билд
 
 ```bash
-git clone https://github.com/твой-юзернейм/zurl.git
+git clone https://github.com/j0u1/zurl.git
 cd zurl
 zig build
 ```
