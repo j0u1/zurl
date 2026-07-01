@@ -9,8 +9,9 @@ pub fn main(init: std.process.Init) !void {
     const args = try init.minimal.args.toSlice(arena);
 
     if (args.len < 2) {
-        log.warn("Usage: {s} <url>", .{args[0]});
-        return;
+        const name = if (args.len > 0) args[0] else "zurl";
+        log.warn("Usage: {s} <url>", .{name});
+        std.process.exit(1);
     }
 
     const url = args[1];
@@ -18,14 +19,13 @@ pub fn main(init: std.process.Init) !void {
     var client = std.http.Client{ .allocator = allocator, .io = io };
     defer client.deinit();
 
-    const res = client.fetch(.{
-        .location = .{ .url = url },
-        .method = .GET,
-    }) catch |err| {
+    const res = client.fetch(.{ .location = .{ .url = url }, .method = .HEAD, .redirect_behavior = .init(10) }) catch |err| {
         log.err("Failed to get status: {s}", .{@errorName(err)});
-        return;
+        std.process.exit(1);
     };
 
     const code: u10 = @intFromEnum(res.status);
-    log.info("Status: {s} ({d})", .{ @tagName(res.status), code });
+    const phrase = res.status.phrase() orelse "unknown";
+
+    log.info("Status: {s} ({d})", .{ phrase, code });
 }
