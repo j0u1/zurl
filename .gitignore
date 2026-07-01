@@ -1,0 +1,9 @@
+# Zig build artifacts
+zig-out/
+.zig-cache/
+
+# старое имя кэша (для проектов на версиях Zig < 0.12)
+zig-cache/
+
+# macOS
+.DS_Store
