@@ -30,6 +30,8 @@ zig build
 sudo cp zig-out/bin/zurl /usr/local/bin/
 ```
 
+> Команда для Linux/macOS. Для Windows - скопируй `zig-out/bin/zurl.exe` в папку, добавленную ранее в `PATH`.
+
 После этого `zurl` можно вызывать из любой директории.
 
 ## Использование
